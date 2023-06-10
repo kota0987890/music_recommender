@@ -47,3 +47,6 @@ README〜ER図作成：5/29〆切
 
 ■figmaのリンク
 https://www.figma.com/file/Jd3uOMsxx6fJ6bPHprlzrz/%E7%84%A1%E9%A1%8C?type=design&node-id=0%3A1&t=33IZ7w7dqW9wki24-1
+
+■draw.ioのリンク
+https://drive.google.com/file/d/1ciKOVCCPm46rIR_96Yapa5nespXXZ1KR/view?usp=sharing
