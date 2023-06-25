@@ -25,29 +25,24 @@ class HomesController < ApplicationController
       min_valence: params[:valence_min].to_f / 100,
       max_valence: params[:valence_max].to_f / 100
     }
-    
-    # 環境変数からクライアントIDとシークレットを取得する
+
     client_id = ENV['SPOTIFY_CLIENT_ID']
-client_secret = ENV['SPOTIFY_CLIENT_SECRET']
+    client_secret = ENV['SPOTIFY_CLIENT_SECRET']
 
-# SpotifyのAPIトークンを取得する
-conn = Faraday.new(url: 'https://accounts.spotify.com')
-response = conn.post('/api/token', {grant_type: 'client_credentials'}) do |req|
-  req.headers['Authorization'] = "Basic #{Base64.encode64("#{client_id}:#{client_secret}").delete("\n")}"
-end
-access_tokens = JSON.parse(response.body)['access_token']
+    conn = Faraday.new(url: 'https://accounts.spotify.com')
+    response = conn.post('/api/token', {grant_type: 'client_credentials'}) do |req|
+      req.headers['Authorization'] = "Basic #{Base64.encode64("#{client_id}:#{client_secret}").delete("\n")}"
+    end
+    access_tokens = JSON.parse(response.body)['access_token']
 
-
-# SpotifyのAPIにリクエストを送ってレコメンデーションを取得する
-conn = Faraday.new(url: 'https://api.spotify.com')
-response = conn.get('/v1/recommendations', s_params) do |req|
-  req.headers['Authorization'] = "Bearer #{access_tokens}"
-end
-@songs = JSON.parse(response.body)['tracks']
-session[:song_ids] = @songs&.map {|t| t["id"]}
+    conn = Faraday.new(url: 'https://api.spotify.com')
+    response = conn.get('/v1/recommendations', s_params) do |req|
+      req.headers['Authorization'] = "Bearer #{access_tokens}"
+    end
+    @songs = JSON.parse(response.body)['tracks']
+    session[:song_ids] = @songs&.map {|t| t["id"]}
   end
 
-  # プレイリストを作成して保存するメソッドを定義します
   def create_playlist
     song_ids = session[:song_ids]
     @songs = song_ids.map do |id|
