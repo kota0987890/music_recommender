@@ -49,3 +49,9 @@ README〜ER図作成：5/29〆切
 - Bootstrap
 - fly.io
 - Spotify API
+
+■figmaのリンク
+https://www.figma.com/file/Jd3uOMsxx6fJ6bPHprlzrz/%E7%84%A1%E9%A1%8C?type=design&node-id=0%3A1&t=33IZ7w7dqW9wki24-1
+
+■draw.io
+[![Image from Gyazo](https://i.gyazo.com/52a4873c9536d4affcf2759fb292ee6a.png)](https://gyazo.com/52a4873c9536d4affcf2759fb292ee6a)
