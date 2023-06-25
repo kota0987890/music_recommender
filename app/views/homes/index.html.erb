@@ -1,0 +1,194 @@
+<div class="container">
+  <% if flash[:notice] %>
+    <div class="alert alert-success">
+      <%= flash[:notice] %>
+    </div>
+  <% end %>
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">
+      Music Finder
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav ml-auto">
+        <% if @user %>
+          <li class="nav-item">
+            <%= "#{@user.nickname}でログインしています。" %> 
+          </li>
+          <li class="nav-item">
+            <%= link_to 'ログアウト', logout_path %>
+          </li>
+        <% else %>
+          <li class=“nav-item”> <%= button_to "Spotifyでログイン", "/auth/spotify/", class: "nav-link" %> </li>
+        <% end %>
+      </ul>
+    </div>
+  </nav>
+
+
+  <% if @user %>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <%= form_with url: homes_create_playlist_path, method: :get do |f| %>
+          <div class="form-group row">
+            <label for="playlist_name" class="col-sm-4 col-form-label align-self-center">プレイリスト名</label>
+            <div class="col-sm-6">
+              <%= f.text_field :playlist_name, class: "form-control", id: "playlist_name" %>
+            </div>
+            <div class="col-sm-4">
+              <%= f.submit 'プレイリストを作成', class:"btn btn-primary" %>
+            </div>
+          </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% else %>
+    <div class="alert alert-info" role="alert">
+      ログインすると検索した曲でSpotifyにプレイリストを作成することができます
+    </div>
+  <% end %>
+</div>
+
+<fieldset>
+  <legend style="text-align: center;">楽曲検索</legend>
+    <div class="text-right">再読み込みをすると同じ条件で検索できます。</div> 
+  <%= form_with url: root_path, method: :get, local: true do |f| %>
+    <div class="container">
+      <div class="row row-cols-1 g-4">
+        <div class="col">
+          <div class="form-group" style="margin-bottom: 50px;">
+            <%= f.label :genre, "ジャンル" %>
+            <%= f.select :genre, RSpotify::Recommendations.available_genre_seeds, {}, class: "form-select" %>
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom: 50px;">
+          <div class="row">
+            <div class="col-2">
+              <%= f.label :popularity, "人気度" %>
+            </div>
+            <div class="col-10">
+              <div id="popularity-slider" style="max-width: 100%; margin: 0 auto;"></div>
+              <%= f.hidden_field :popularity_min %>
+              <%= f.hidden_field :popularity_max %>
+            </div>
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom: 50px;">
+          <div class="row">
+            <div class="col-2">
+              <%= f.label :liveness, "ライブ感" %>
+            </div>
+            <div class="col-10">
+              <div id="liveness-slider" style="max-width: 100%; margin: 0 auto;"></div>
+              <%= f.hidden_field :liveness_min %>
+              <%= f.hidden_field :liveness_max %>
+            </div>
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom: 50px;">
+          <div class="row">
+            <div class="col-2">
+              <%= f.label :danceability, "ダンス性" %>
+            </div>
+            <div class="col-10">
+              <div id="danceability-slider" style="max-width: 100%; margin: 0 auto;"></div>
+              <%= f.hidden_field :danceability_min %>
+              <%= f.hidden_field :danceability_max %>
+            </div>
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom: 50px;">
+          <div class="row">
+            <div class="col-2">
+              <%= f.label :acousticness, "アコースティック感" %>
+            </div>
+            <div class="col-10">
+              <div id="acousticness-slider" style="max-width: 100%; margin: 0 auto;"></div>
+              <%= f.hidden_field :acousticness_min %>
+              <%= f.hidden_field :acousticness_max %>
+            </div>
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom: 50px;">
+          <div class="row">
+            <div class="col-2">
+              <%= f.label :energy, "エネルギッシュ" %>
+            </div>
+            <div class="col-10">
+              <div id="energy-slider" style="max-width: 100%; margin: 0 auto;"></div>
+              <%= f.hidden_field :energy_min %>
+              <%= f.hidden_field :energy_max %>
+            </div>  
+          </div>  
+        </div>  
+        <div class="form-group" style="margin-bottom: 50px;">
+          <div class="row">
+            <div class="col-2">
+              <%= f.label :speechiness, "歌詞の多さ" %>
+            </div>  
+            <div class="col-10">  
+              <div id="speechiness-slider" style="max-width: 100%; margin: 0 auto;"></div>  
+              <%= f.hidden_field :speechiness_min %>  
+              <%= f.hidden_field :speechiness_max %>  
+            </div>  
+          </div>  
+        </div>  
+        <div class="form-group" style="margin-bottom: 50px;">
+          <div class="row">  
+            <div class="col-2">  
+              <%= f.label :valence, "ポジティブ度" %>  
+            </div>  
+            <div class="col-10">  
+              <div id="valence-slider" style="max-width: 100%; margin: 0 auto;"></div>  
+              <%= f.hidden_field :valence_min %>  
+              <%= f.hidden_field :valence_max %>  
+            </div>  
+          </div>  
+        </div> 
+        <div class="col d-flex justify-content-between">
+          <div class="form-group row">
+            <label for="limit" class="col-sm-4 col-form-label">曲数</label>
+            <div class="col-sm-5">
+              <%= f.select :limit, options_for_select((1..100).to_a), {}, class: "form-control", id: "limit" %>
+            </div>
+            <div class="col-sm-4 text-right">
+              <%= f.submit "検索", class: "btn btn-primary" %>
+            </div>
+          </div>
+        </div>
+      </div>  
+    </div>  
+  <% end %>
+</fieldset>
+
+<h1 style="text-align: center;">検索結果</h1>
+<div class="text-right">アルバム画像をクリックすると音楽が流れるものもあります。</div> 
+
+<% if @songs.present? %>
+  <div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+      <% @songs.each do |song| %>
+        <div class="col">
+          <div class="card h-100">
+            <%= image_tag "Spotify_Logo.png", alt: "Spotify logo", class: "card-logo-top img-fluid" %>
+            <audio id="<%= song["id"] %>" src="<%= song["preview_url"] %>"></audio>
+            <%= link_to "javascript:void(0)", data: { id: song["id"] }, onclick: "toggleAudio(this)" do %>
+              <%= image_tag song["album"]["images"][0]["url"], alt: "Album art", class: "card-img-top img-fluid" %>
+            <% end %>
+            <div class="card-body">
+              <h5 class="card-title"><%= link_to song["name"], song["external_urls"]["spotify"] %></h5>
+              <p class="card-text"><%= song["artists"][0]["name"] %></p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% else %>
+  <h1 style="text-align: center;">条件と合う楽曲はありませんでした。</h1>
+<% end %>
