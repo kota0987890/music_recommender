@@ -54,6 +54,8 @@ group :development do
   gem 'rubocop', require: false
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
+
+  gem "dockerfile-rails", ">= 1.5"
 end
 
 gem 'simplecov', require: false, group: :test
@@ -73,7 +75,5 @@ gem 'faraday'
 gem 'bootstrap', '~> 4.6.2'
 
 gem 'dotenv-rails'
-
-gem "dockerfile-rails", ">= 1.5", :group => :development
 
 gem 'faraday-net_http'

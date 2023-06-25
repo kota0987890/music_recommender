@@ -1,6 +1,4 @@
-// app/assets/javascripts/sliders.js
 $(function () {
-  // スライダー用div要素を取得
   var popularitySlider = document.getElementById('popularity-slider');
   var livenessSlider = document.getElementById('liveness-slider');
   var danceabilitySlider = document.getElementById('danceability-slider');
@@ -8,7 +6,7 @@ $(function () {
   var energySlider = document.getElementById('energy-slider');
   var speechinessSlider = document.getElementById('speechiness-slider');
   var valenceSlider = document.getElementById('valence-slider');
-  // 隠しフィールド要素を取得
+
   var popularityMin = document.getElementById('popularity_min');
   var popularityMax = document.getElementById('popularity_max');
   var livenessMin = document.getElementById('liveness_min');
