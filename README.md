@@ -24,8 +24,13 @@
 
 ■実装予定の機能
 - 利用者
-    - Spotifyにログインすることで、ユーザーのライブラリにプレイリストを保存できる
+    - Spotifyと連携し、ユーザーのライブラリにプレイリストを保存できる
     - 人気度やジャンルを選択し、その条件に合った曲を取得できる
+    - アルバム画像をクリックすると、プレビュー再生ができる
+    - 曲名をタップすると、その曲の紹介ページにアクセスできる
+- 管理ユーザー
+    - 音楽のジャンルや条件を管理できる
+    - システムの利用状況や統計情報を確認できる
 
 ■なぜこのサービスを作りたいのか？
 自分は元々音楽を聴くことが好きでよく聴いているのですが、自分にあった新しい音楽を見つけるのは難しく同じ曲ばかり聴いていました。そこで、自分の知らない新しい音楽を簡単に見つけられるようにするために、このサービスを作りたいと思いました。
@@ -38,15 +43,15 @@ README〜ER図作成：5/29〆切
 本番リリース：6月末
 
 ■技術選定
-- Rails7
+- Rails5
 - postgresql
 - JavaScript
 - Bootstrap
-- heroku
+- fly.io
 - Spotify API
 
 ■figmaのリンク
 https://www.figma.com/file/Jd3uOMsxx6fJ6bPHprlzrz/%E7%84%A1%E9%A1%8C?type=design&node-id=0%3A1&t=33IZ7w7dqW9wki24-1
 
-■draw.ioのリンク
-https://drive.google.com/file/d/1ciKOVCCPm46rIR_96Yapa5nespXXZ1KR/view?usp=sharing
+■draw.io
+[![Image from Gyazo](https://i.gyazo.com/52a4873c9536d4affcf2759fb292ee6a.png)](https://gyazo.com/52a4873c9536d4affcf2759fb292ee6a)
