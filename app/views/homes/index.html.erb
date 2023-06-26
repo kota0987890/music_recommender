@@ -7,7 +7,7 @@
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">
-      Music Finder
+      Music_Recommender
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -22,7 +22,6 @@
             <%= link_to 'ログアウト', logout_path %>
           </li>
         <% else %>
-          <li class=“nav-item”> <%= button_to "Spotifyでログイン", "/auth/spotify/", class: "nav-link" %> </li>
         <% end %>
       </ul>
     </div>
