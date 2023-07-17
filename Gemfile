@@ -55,7 +55,7 @@ group :development do
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
 
-  gem "dockerfile-rails", ">= 1.5"
+  gem 'dockerfile-rails', '>= 1.5'
 end
 
 gem 'simplecov', require: false, group: :test
@@ -70,10 +70,7 @@ gem 'rspotify'
 gem 'omniauth-spotify'
 gem 'omniauth-rails_csrf_protection'
 
-gem 'faraday'
-
 gem 'bootstrap', '~> 4.6.2'
 
 gem 'dotenv-rails'
 
-gem 'faraday-net_http'

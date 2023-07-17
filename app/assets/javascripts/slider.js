@@ -155,7 +155,6 @@ $(function () {
     }
   });
 
-  // updateイベントで隠しフィールドに値をセット
   popularitySlider.noUiSlider.on('update', function (values, handle) {
     popularityMin.value = values[0];
     popularityMax.value = values[1];

@@ -22,11 +22,11 @@
             <%= link_to 'ログアウト', logout_path %>
           </li>
         <% else %>
+          <li class=“nav-item”> <%= button_to "Spotifyでログイン", "/auth/spotify/", class: "nav-link" %> </li>
         <% end %>
       </ul>
     </div>
   </nav>
-
 
   <% if @user %>
     <div class="container">
@@ -47,6 +47,9 @@
       </div>
     </div>
   <% else %>
+    <div class="alert alert-info" role="alert">
+      ログインすると検索した曲でSpotifyにプレイリストを作成することができます
+    </div>
   <% end %>
 </div>
 
@@ -59,7 +62,7 @@
         <div class="col">
           <div class="form-group" style="margin-bottom: 50px;">
             <%= f.label :genre, "ジャンル" %>
-            <%= f.select :genre, RSpotify::Recommendations.available_genre_seeds, {}, class: "form-select" %>
+            <%= f.select :genre, RSpotify::Recommendations.available_genre_seeds, {selected: params[:genre]}, class: "form-select" %>
           </div>
         </div>
         <div class="form-group" style="margin-bottom: 50px;">
@@ -69,7 +72,7 @@
             </div>
             <div class="col-10">
               <div id="popularity-slider" style="max-width: 100%; margin: 0 auto;"></div>
-              <%= f.hidden_field :popularity_min %>
+              <%= f.hidden_field :popularity_min%> 
               <%= f.hidden_field :popularity_max %>
             </div>
           </div>
@@ -150,7 +153,7 @@
           <div class="form-group row">
             <label for="limit" class="col-sm-4 col-form-label">曲数</label>
             <div class="col-sm-5">
-              <%= f.select :limit, options_for_select((1..100).to_a), {}, class: "form-control", id: "limit" %>
+              <%= f.select :limit, options_for_select((1..100).to_a, params[:limit]), {}, class: "form-control", id: "limit" %>
             </div>
             <div class="col-sm-4 text-right">
               <%= f.submit "検索", class: "btn btn-primary" %>
@@ -170,15 +173,16 @@
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
       <% @songs.each do |song| %>
         <div class="col">
-          <div class="card h-100">
-            <%= image_tag "Spotify_Logo.png", alt: "Spotify logo", class: "card-logo-top img-fluid" %>
+          <div class="h-100">
             <audio id="<%= song["id"] %>" src="<%= song["preview_url"] %>"></audio>
             <%= link_to "javascript:void(0)", data: { id: song["id"] }, onclick: "toggleAudio(this)" do %>
-              <%= image_tag song["album"]["images"][0]["url"], alt: "Album art", class: "card-img-top img-fluid" %>
+              <%= image_tag song["album"]["images"][0]["url"], alt: "Album art", class: "img-fluid", style: "border-radius: 0;" %>
             <% end %>
-            <div class="card-body">
+            <div>
               <h5 class="card-title"><%= link_to song["name"], song["external_urls"]["spotify"] %></h5>
-              <p class="card-text"><%= song["artists"][0]["name"] %></p>
+              <p class="card-text"><%= song["artists"][0]["name"] %>
+              <br>
+              <%= song["album"]["name"] %></p>
             </div>
           </div>
         </div>
@@ -188,3 +192,9 @@
 <% else %>
   <h1 style="text-align: center;">条件と合う楽曲はありませんでした。</h1>
 <% end %>
+
+<div class="container">
+  <div class="d-flex justify-content-end" style="margin-top: 20px;">
+    <%= image_tag "Spotify_Logo.png", alt: "Spotify logo", class: "card-logo-top img-fluid", style: "width: 200px; height: auto;" %>
+  </div>
+</div>

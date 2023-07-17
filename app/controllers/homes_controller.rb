@@ -1,45 +1,10 @@
 class HomesController < ApplicationController
-  require 'rspotify'
-  RSpotify.authenticate(ENV['SPOTIFY_CLIENT_ID'], ENV['SPOTIFY_CLIENT_SECRET'])
-
-  Faraday.default_adapter = :net_http
-
   before_action :set_user
 
   def index
-    s_params = {
-      limit: params[:limit].to_i,
-      seed_genres: params[:genre],
-      min_popularity: params[:popularity_min].to_i,
-      max_popularity: params[:popularity_max].to_i,
-      min_liveness: params[:liveness_min].to_f / 100,
-      max_liveness: params[:liveness_max].to_f / 100,
-      min_danceability: params[:danceability_min].to_f / 100,
-      max_danceability: params[:danceability_max].to_f / 100,
-      min_acousticness: params[:acousticness_min].to_f / 100,
-      max_acousticness: params[:acousticness_max].to_f / 100,
-      min_energy: params[:energy_min].to_f / 100,
-      max_energy: params[:energy_max].to_f / 100,
-      min_speechiness: params[:speechiness_min].to_f / 100,
-      max_speechiness: params[:speechiness_max].to_f / 100,
-      min_valence: params[:valence_min].to_f / 100,
-      max_valence: params[:valence_max].to_f / 100
-    }
-
-    client_id = ENV['SPOTIFY_CLIENT_ID']
-    client_secret = ENV['SPOTIFY_CLIENT_SECRET']
-
-    conn = Faraday.new(url: 'https://accounts.spotify.com')
-    response = conn.post('/api/token', {grant_type: 'client_credentials'}) do |req|
-      req.headers['Authorization'] = "Basic #{Base64.encode64("#{client_id}:#{client_secret}").delete("\n")}"
-    end
-    access_tokens = JSON.parse(response.body)['access_token']
-
-    conn = Faraday.new(url: 'https://api.spotify.com')
-    response = conn.get('/v1/recommendations', s_params) do |req|
-      req.headers['Authorization'] = "Bearer #{access_tokens}"
-    end
-    @songs = JSON.parse(response.body)['tracks']
+    spotify_service = SpotifyService.new
+    access_token = spotify_service.token
+    @songs = spotify_service.get_recommendations(s_params, access_token)
     session[:song_ids] = @songs&.map {|t| t["id"]}
   end
 
@@ -62,5 +27,26 @@ class HomesController < ApplicationController
     else
       @user = nil
     end
+  end
+
+  def s_params
+    {
+      limit: params[:limit].to_i,
+      seed_genres: params[:genre],
+      min_popularity: params[:popularity_min].to_i,
+      max_popularity: params[:popularity_max].to_i,
+      min_liveness: params[:liveness_min].to_f / 100,
+      max_liveness: params[:liveness_max].to_f / 100,
+      min_danceability: params[:danceability_min].to_f / 100,
+      max_danceability: params[:danceability_max].to_f / 100,
+      min_acousticness: params[:acousticness_min].to_f / 100,
+      max_acousticness: params[:acousticness_max].to_f / 100,
+      min_energy: params[:energy_min].to_f / 100,
+      max_energy: params[:energy_max].to_f / 100,
+      min_speechiness: params[:speechiness_min].to_f / 100,
+      max_speechiness: params[:speechiness_max].to_f / 100,
+      min_valence: params[:valence_min].to_f / 100,
+      max_valence: params[:valence_max].to_f / 100
+    }
   end
 end
