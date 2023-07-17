@@ -4,7 +4,7 @@ $(function () {
   var danceabilitySlider = document.getElementById('danceability-slider');
   var acousticnessSlider = document.getElementById('acousticness-slider');
   var energySlider = document.getElementById('energy-slider');
-  var speechinessSlider = document.getElementById('speechiness-slider');
+  var instrumentalnessSlider = document.getElementById('instrumentalness-slider');
   var valenceSlider = document.getElementById('valence-slider');
 
   var popularityMin = document.getElementById('popularity_min');
@@ -17,8 +17,8 @@ $(function () {
   var acousticnessMax = document.getElementById('acousticness_max');
   var energyMin = document.getElementById('energy_min');
   var energyMax = document.getElementById('energy_max');
-  var speechinessMin = document.getElementById('speechiness_min');
-  var speechinessMax = document.getElementById('speechiness_max');
+  var instrumentalnessMin = document.getElementById('instrumentalness_min');
+  var instrumentalnessMax = document.getElementById('instrumentalness_max');
   var valenceMin = document.getElementById('valence_min');
   var valenceMax = document.getElementById('valence_max');
 
@@ -117,7 +117,7 @@ $(function () {
     }
   });
   
-  noUiSlider.create(speechinessSlider, {
+  noUiSlider.create(instrumentalnessSlider, {
     range: {
       'min': 0,
       'max': 100
@@ -180,13 +180,129 @@ $(function () {
     energyMax.value = values[1];
   });
   
-  speechinessSlider.noUiSlider.on('update', function (values, handle) {
-    speechinessMin.value = values[0];
-    speechinessMax.value = values[1];
+  instrumentalnessSlider.noUiSlider.on('update', function (values, handle) {
+    instrumentalnessMin.value = values[0];
+    instrumentalnessMax.value = values[1];
   });
   
   valenceSlider.noUiSlider.on('update', function (values, handle) {
     valenceMin.value = values[0];
     valenceMax.value = values[1];
+  });
+
+  function getQueryParams() {
+    var params = {};
+    var query = window.location.search.substring(1);
+    var vars = query.split('&');
+    for (var i = 0; i < vars.length; i++) {
+      var pair = vars[i].split('=');
+      params[pair[0]] = pair[1];
+    }
+    return params;
+  }
+
+  function setSliderValues() {
+    var params = getQueryParams();
+    if (params.popularity_min) {
+      popularitySlider.noUiSlider.set([params.popularity_min, null]);
+    }
+    if (params.popularity_max) {
+      popularitySlider.noUiSlider.set([null, params.popularity_max]);
+    }
+    if (params.liveness_min) {
+      livenessSlider.noUiSlider.set([params.liveness_min, null]);
+    }
+    if (params.liveness_max) {
+      livenessSlider.noUiSlider.set([null, params.liveness_max]);
+    }
+    if (params.danceability_min) {
+      danceabilitySlider.noUiSlider.set([params.danceability_min, null]);
+    }
+    if (params.danceability_max) {
+      danceabilitySlider.noUiSlider.set([null, params.danceability_max]);
+    }
+    if (params.acousticness_min) {
+      acousticnessSlider.noUiSlider.set([params.acousticness_min, null]);
+    }
+    if (params.acousticness_max) {
+      acousticnessSlider.noUiSlider.set([null, params.acousticness_max]);
+    }
+    if (params.energy_min) {
+      energySlider.noUiSlider.set([params.energy_min, null]);
+    }
+    if (params.energy_max) {
+      energySlider.noUiSlider.set([null, params.energy_max]);
+    }
+    if (params.instrumentalness_min) {
+      instrumentalnessSlider.noUiSlider.set([params.instrumentalness_min, null]);
+    }
+    if (params.instrumentalness_max) {
+      instrumentalnessSlider.noUiSlider.set([null, params.instrumentalness_max]);
+    }
+    if (params.valence_min) {
+      valenceSlider.noUiSlider.set([params.valence_min, null]);
+    }
+    if (params.valence_max) {
+      valenceSlider.noUiSlider.set([null, params.valence_max]);
+    }
+  }
+
+  function updateQueryParams() {
+    var params = getQueryParams();
+    params.popularity_min = popularityMin.value;
+    params.popularity_max = popularityMax.value;
+    params.liveness_min = livenessMin.value;
+    params.liveness_max = livenessMax.value;
+    params.danceability_min = danceabilityMin.value;
+    params.danceability_max = danceabilityMax.value;
+    params.acousticness_min = acousticnessMin.value;
+    params.acousticness_max = acousticnessMax.value;
+    params.energy_min = energyMin.value;
+    params.energy_max = energyMax.value;
+    params.instrumentalness_min = instrumentalnessMin.value;
+    params.instrumentalness_max = instrumentalnessMax.value;
+    params.valence_min = valenceMin.value;
+    params.valence_max = valenceMax.value;
+  
+    var query = '';
+    for (var key in params) {
+      query += key + '=' + params[key] + '&';
+    }
+
+  query = query.slice(0, -1);
+
+  window.history.replaceState(null, null, '?' + query);
+  }
+
+  $(document).ready(function () {
+  setSliderValues();
+  });
+
+  popularitySlider.noUiSlider.on('change', function () {
+  updateQueryParams();
+  });
+  
+  livenessSlider.noUiSlider.on('change', function () {
+  updateQueryParams();
+  });
+  
+  danceabilitySlider.noUiSlider.on('change', function () {
+  updateQueryParams();
+  });
+  
+  acousticnessSlider.noUiSlider.on('change', function () {
+  updateQueryParams();
+  });
+  
+  energySlider.noUiSlider.on('change', function () {
+  updateQueryParams();
+  });
+  
+  instrumentalnessSlider.noUiSlider.on('change', function () {
+  updateQueryParams();
+  });
+  
+  valenceSlider.noUiSlider.on('change', function () {
+  updateQueryParams();
   });
 });
