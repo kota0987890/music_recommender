@@ -34,9 +34,8 @@
         <div class="col-md-6">
           <%= form_with url: homes_create_playlist_path, method: :get do |f| %>
           <div class="form-group row">
-            <label for="playlist_name" class="col-sm-4 col-form-label align-self-center">プレイリスト名</label>
-            <div class="col-sm-6">
-              <%= f.text_field :playlist_name, class: "form-control", id: "playlist_name" %>
+            <div class="col-sm-12">
+              <%= f.text_field :playlist_name, class: "form-control", id: "playlist_name", placeholder: "プレイリスト名を入力してください" %>
             </div>
             <div class="col-sm-4">
               <%= f.submit 'プレイリストを作成', class:"btn btn-primary" %>
@@ -128,12 +127,12 @@
         <div class="form-group" style="margin-bottom: 50px;">
           <div class="row">
             <div class="col-2">
-              <%= f.label :speechiness, "歌詞の多さ" %>
+              <%= f.label :instrumentalness, "歌詞の少なさ" %>
             </div>  
             <div class="col-10">  
-              <div id="speechiness-slider" style="max-width: 100%; margin: 0 auto;"></div>  
-              <%= f.hidden_field :speechiness_min %>  
-              <%= f.hidden_field :speechiness_max %>  
+              <div id="instrumentalness-slider" style="max-width: 100%; margin: 0 auto;"></div>  
+              <%= f.hidden_field :instrumentalness_min %>  
+              <%= f.hidden_field :instrumentalness_max %>  
             </div>  
           </div>  
         </div>  

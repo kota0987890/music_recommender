@@ -43,8 +43,8 @@ class HomesController < ApplicationController
       max_acousticness: params[:acousticness_max].to_f / 100,
       min_energy: params[:energy_min].to_f / 100,
       max_energy: params[:energy_max].to_f / 100,
-      min_speechiness: params[:speechiness_min].to_f / 100,
-      max_speechiness: params[:speechiness_max].to_f / 100,
+      min_instrumentalness: params[:instrumentalness_min].to_f / 100,
+      max_instrumentalness: params[:instrumentalness_max].to_f / 100,
       min_valence: params[:valence_min].to_f / 100,
       max_valence: params[:valence_max].to_f / 100
     }
