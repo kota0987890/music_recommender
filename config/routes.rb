@@ -5,6 +5,6 @@ Rails.application.routes.draw do
     collection {get "search"}
   end
   get '/auth/:provider/callback' => 'sessions#create'
-  get '/create_playlist', to: 'homes#create_playlist', as: 'homes_create_playlist'
+  post '/playlists' => 'playlists#create'
   get '/logout' => 'sessions#destroy', :as => :logout
 end
